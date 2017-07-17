@@ -1,12 +1,12 @@
 <md-content layout="row" layout-align="{{list.layoutAlign}}" flex class="md-padding">
-  <md-card flex="30">
+  <md-card flex="30" class="translate-x" ng-class="{'on': list.editMode}">
     <md-toolbar>
       <div class="md-toolbar-tools">
         <h6 ng-show="!list.editMode">
           <span>Add Company</span>
         </h6>
         <div ng-show="list.editMode" layout="row" layout-align="start center">
-          <md-button class="md-icon-button" ng-click="list.editMode = undefined">
+          <md-button class="md-icon-button" ng-click="list.editCompany()">
             <md-icon>arrow_back</md-icon>
           </md-button>
           <h6>Edit: {{list.focusedCompany.name}}</h6>
@@ -52,7 +52,7 @@
       </md-content>
     </md-content>
     <md-card-actions class="padding-bottom" layout="row" layout-align="start center">
-      <md-button class="md-icon-button">
+      <md-button class="md-icon-button" ng-click="list.clearForm(list.editMode)">
         <md-tooltip>Clear Fields</md-tooltip>
         <md-icon>clear_all</md-icon>
       </md-button>
@@ -68,7 +68,7 @@
     </md-card-actions>
   </md-card>
   <span class="md-padding"></span>
-  <md-content layout="column" flex ng-show="!list.editMode">
+  <md-content class="fade-out translate-x" layout="column" flex ng-show="!list.editMode" ng-class="{'on': list.editMode}">
     <h1 class="md-title padding-top">List of Companies</h1>
     <md-content layout="row" flex>
       <md-content class="company-wrapper" layout="column" flex>
@@ -116,11 +116,10 @@
                   </p>
                 </div>
               </div>
-              <md-divider></md-divider>
               <div class="card-actions" layout="row" flex ng-class="{'slide-down': list.focusCompany === company._id}">
                 <md-button ng-click="list.removeCompany(company._id, $event)">Delete</md-button>
                 <span flex></span>
-                <md-button class="md-primary" ng-click="list.editCompany(company._id)">Edit</md-button>
+                <md-button class="md-primary" ng-click="list.editCompany(company)">Edit</md-button>
               </div>
             </md-card>
           </div>
