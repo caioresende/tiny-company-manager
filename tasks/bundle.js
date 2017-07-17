@@ -35,7 +35,7 @@ function bundle() {
     // optional, remove if you dont want sourcemaps
     .pipe(buffer())
     //
-    .pipe(gulp.dest('./app/'))
+    .pipe(gulp.dest('./dist/'))
     .pipe(browserSync.reload({ stream: true}));
 }
 
