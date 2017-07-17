@@ -81,3 +81,23 @@ $small-padding: 8px;
 .slide-down {
   max-height: 48px;
 }
+
+.translate-x {
+  transform: translateX(0);
+  transition-property: all;
+	transition-duration: 0.5s;
+	transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+  &.on {
+    transform: translateX(100px);
+  }
+}
+
+.fade-out {
+  opacity: 1;
+  transition-property: all;
+	transition-duration: 0.5s;
+	transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+  &.on {
+    opacity: 0;
+  }
+}
