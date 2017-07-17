@@ -1,0 +1,23 @@
+{
+  "name": "tiny-company-manager",
+  "version": "1.0.0",
+  "description": "This app was designed using NodeJs, Express, MongoDB and AngularJS + Angular Material",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://imcaioresende@bitbucket.org/imcaioresende/tiny-company-manager.git"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "mongodb",
+    "angularjs",
+    "angular-material"
+  ],
+  "author": "Caio Resende",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/imcaioresende/tiny-company-manager#readme"
+}
