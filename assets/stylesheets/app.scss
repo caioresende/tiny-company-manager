@@ -1,0 +1,83 @@
+@charset 'UTF-8';
+
+/* Third party */
+@import 'angular-material/angular-material.scss';
+
+/* Colors */
+$color-opacity-black-dark: rgba(0, 0, 0, 0.84);
+$color-opacity-black-light: rgba(0, 0, 0, 0.12);
+
+/* Borders */
+$default-border: solid 1px $color-opacity-black-light;
+
+/* Padding & Margin */
+$default-margin: 16px;
+$default-padding: 16px !important;
+$small-padding: 8px;
+
+/* Layout custom classes */
+.no-margin { margin: 0 !important; }
+
+.no-padding { padding: 0 !important; }
+
+.border-left { border-left: $default-border }
+
+.padding-right { padding-right: $default-padding }
+.padding-left { padding-left: $default-padding }
+.padding-top { padding-top: $default-padding }
+.padding-bottom { padding-bottom: $default-padding }
+
+.margin-right { margin-right: $default-margin }
+.margin-left { margin-left: $default-margin }
+.margin-top { margin-top: $default-margin }
+.margin-bottom { margin-bottom: $default-margin }
+
+.text-center { text-align: center }
+
+/* Coloring */
+.white-bg {
+  background: white;
+}
+.light-bg-gray {
+  background: rgba(0,0,0,0.05);
+}
+
+/* Custom Styling */
+.company-wrapper {
+  overflow-y: scroll;
+}
+
+.company-initial {
+  width: 48px;
+  height: 48px;
+  background: #3d5afe;
+  text-align: center;
+  line-height: 48px;
+  border-radius: 50%;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: white;
+}
+
+/* Animation */
+.company-card {
+  transition-property: all;
+	transition-duration: .5s;
+	transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}
+
+.card-actions {
+  max-height: 0;
+  overflow: hidden;
+  transition-property: all;
+	transition-duration: .5s;
+	transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}
+
+.opacity-card {
+  opacity: 0.54;
+}
+
+.slide-down {
+  max-height: 48px;
+}

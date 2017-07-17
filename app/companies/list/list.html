@@ -1,0 +1,131 @@
+<md-content layout="row" layout-align="{{list.layoutAlign}}" flex class="md-padding">
+  <md-card flex="30">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h6 ng-show="!list.editMode">
+          <span>Add Company</span>
+        </h6>
+        <div ng-show="list.editMode" layout="row" layout-align="start center">
+          <md-button class="md-icon-button" ng-click="list.editMode = undefined">
+            <md-icon>arrow_back</md-icon>
+          </md-button>
+          <h6>Edit: {{list.focusedCompany.name}}</h6>
+        </div>
+      </div>
+    </md-toolbar>
+    <md-divider></md-divider>
+    <md-content class="white-bg" layout="row" flex>
+      <md-content class="white-bg" layout="column" flex>
+        <form name="list.companyForm" layout="column" class="md-padding" flex>
+          <md-input-container>
+            <label>Name</label>
+            <input ng-model="list.company.name"  />
+          </md-input-container>
+          <md-input-container>
+            <label>Email</label>
+            <input name="email" type="email" ng-model="list.company.email"  />
+            <div ng-messages="list.companyForm.email.$error">
+              <div ng-message="email">You did not enter your email address correctly</div>
+            </div>
+          </md-input-container>
+          <md-input-container>
+            <label>Phone</label>
+            <input ng-model="list.company.phone"  />
+          </md-input-container>
+          <md-input-container>
+            <label>Adress</label>
+            <input ng-model="list.company.address"  />
+          </md-input-container>
+          <md-input-container>
+            <label>City</label>
+            <input ng-model="list.company.city"  />
+          </md-input-container>
+          <md-input-container>
+            <label>Country</label>
+            <input ng-model="list.company.country"  />
+          </md-input-container>
+          <md-input-container>
+            <label>Beneficial Owners</label>
+            <input ng-model="list.company.owners"  />
+          </md-input-container>
+        </form>
+      </md-content>
+    </md-content>
+    <md-card-actions class="padding-bottom" layout="row" layout-align="start center">
+      <md-button class="md-icon-button">
+        <md-tooltip>Clear Fields</md-tooltip>
+        <md-icon>clear_all</md-icon>
+      </md-button>
+      <span flex></span>
+      <md-button class="md-primary md-raised md-icon-button" ng-disabled="list.companyForm.$invalid" ng-show="!list.editMode">
+        <md-tooltip>Add Company</md-tooltip>
+        <md-icon>add</md-icon>
+      </md-button>
+      <md-button class="md-primary md-raised md-icon-button" ng-disabled="list.companyForm.$invalid" ng-show="list.editMode">
+        <md-tooltip>Save Company</md-tooltip>
+        <md-icon>check</md-icon>
+      </md-button>
+    </md-card-actions>
+  </md-card>
+  <span class="md-padding"></span>
+  <md-content layout="column" flex ng-show="!list.editMode">
+    <h1 class="md-title padding-top">List of Companies</h1>
+    <md-content layout="row" flex>
+      <md-content class="company-wrapper" layout="column" flex>
+        <div layout="row" layout-wrap flex>
+          <div flex="25"  ng-repeat="company in list.companies track by company._id" layout-align="start start">
+            <md-card class="company-card" ng-mouseenter="list.focusCompany = company._id" ng-mouseleave="list.focusCompany = undefined" ng-class="{'md-whiteframe-7dp': list.focusCompany === company._id, 'opacity-card': list.focusCompany && list.focusCompany !== company._id}">
+              <div layout="row" layout-align="start center" class="md-padding">
+                <div class="company-initial margin-right">
+                  {{company.name | limitTo: 1}}
+                </div>
+                <p class="md-subhead">
+                  {{company.name}}
+                </p>
+              </div>
+              <md-divider></md-divider>
+              <div class="md-padding">
+                <div layout="row" layout-align="start start">
+                  <md-icon class="margin-right">navigation</md-icon>
+                  <p class="md-body-1" flex>
+                    {{company.address}}
+                  </p>
+                </div>
+                <div layout="row" layout-align="start start">
+                  <md-icon class="margin-right">place</md-icon>
+                  <p class="md-body-1" flex>
+                    {{company.city}}, {{company.country}}
+                  </p>
+                </div>
+                <div layout="row" layout-align="start start">
+                  <md-icon class="margin-right">phone</md-icon>
+                  <p class="md-body-1" flex>
+                    {{company.phone}}
+                  </p>
+                </div>
+                <div layout="row" layout-align="start start">
+                  <md-icon class="margin-right">email</md-icon>
+                  <p class="md-body-1" flex>
+                    {{company.email}}
+                  </p>
+                </div>
+                <div layout="row" layout-align="start start">
+                  <md-icon class="margin-right">group</md-icon>
+                  <p class="md-body-1" flex>
+                    {{company.owners}}
+                  </p>
+                </div>
+              </div>
+              <md-divider></md-divider>
+              <div class="card-actions" layout="row" flex ng-class="{'slide-down': list.focusCompany === company._id}">
+                <md-button ng-click="list.removeCompany(company._id, $event)">Delete</md-button>
+                <span flex></span>
+                <md-button class="md-primary" ng-click="list.editCompany(company._id)">Edit</md-button>
+              </div>
+            </md-card>
+          </div>
+        </div>
+      </md-content>
+    </md-content>
+  </md-content>
+</md-content>
