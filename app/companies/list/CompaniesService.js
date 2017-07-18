@@ -1,14 +1,23 @@
-module.exports = function($q) {
+module.exports = function($q, $http) {
   'njInject';
 
   var self = this;
 
-  var companyUrl = '/api/companies';
+  var companyUrl = 'https://mysterious-citadel-17041.herokuapp.com/api/companies';
+
+  var formatCompanies = function(response) {
+    var obj = {};
+
+    for (var i = 0; i < response.length; i++) {
+      obj[response[i]._id] = response[i];
+    }
+    self.companies = obj;
+    return obj;
+  };
 
   this.companies = {};
 
   this.createCompany = function(company) {
-    console.log(company);
     var id = new Date().getTime();
 
     self.companies[id] = angular.copy(company);
@@ -22,7 +31,9 @@ module.exports = function($q) {
   };
 
   this.getCompanies = function() {
-    return $q.when(self.companies);
+    return $http.get(companyUrl).then(function(response) {
+      return formatCompanies(response.data);
+    });
   };
 
   this.updateCompany = function(company) {
