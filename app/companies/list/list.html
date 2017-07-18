@@ -85,31 +85,31 @@
               </div>
               <md-divider></md-divider>
               <div class="md-padding">
-                <div layout="row" layout-align="start start">
+                <div layout="row" layout-align="start start" ng-show="company.address">
                   <md-icon class="margin-right">navigation</md-icon>
                   <p class="md-body-1" flex>
                     {{company.address}}
                   </p>
                 </div>
-                <div layout="row" layout-align="start start">
+                <div layout="row" layout-align="start start" ng-show="company.city || company.country">
                   <md-icon class="margin-right">place</md-icon>
                   <p class="md-body-1" flex>
-                    {{company.city}}, {{company.country}}
+                    {{company.city}} <span ng-show="company.city && company.country">•</span> {{company.country}}
                   </p>
                 </div>
-                <div layout="row" layout-align="start start">
+                <div layout="row" layout-align="start start" ng-show="company.phone">
                   <md-icon class="margin-right">phone</md-icon>
                   <p class="md-body-1" flex>
                     {{company.phone}}
                   </p>
                 </div>
-                <div layout="row" layout-align="start start">
+                <div layout="row" layout-align="start start" ng-show="company.email">
                   <md-icon class="margin-right">email</md-icon>
                   <p class="md-body-1" flex>
                     {{company.email}}
                   </p>
                 </div>
-                <div layout="row" layout-align="start start">
+                <div layout="row" layout-align="start start" ng-show="company.owners">
                   <md-icon class="margin-right">group</md-icon>
                   <p class="md-body-1" flex>
                     {{company.owners}}
