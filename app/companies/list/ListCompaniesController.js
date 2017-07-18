@@ -20,8 +20,9 @@ module.exports = function(CompaniesService) {
   this.companies = [];
 
   var getCompanies = function() {
+    self.loading = 'get';
     CompaniesService.getCompanies().then(function(response) {
-      console.log(response);
+      self.loading = 'false';
       self.companies = response;
     });
   };
@@ -31,7 +32,6 @@ module.exports = function(CompaniesService) {
   this.addCompany = function() {
     self.loading = 'create';
     CompaniesService.createCompany(self.company).then(function(response) {
-      console.log(response);
       self.clearForm(false);
       self.loading = false;
     });
@@ -44,7 +44,6 @@ module.exports = function(CompaniesService) {
   this.deleteCompany = function(id) {
     self.loading = 'delete';
     CompaniesService.deleteCompany(id).then(function(response) {
-      console.log(response);
       self.loading = false;
     });
   };
@@ -64,7 +63,6 @@ module.exports = function(CompaniesService) {
   this.updateCompany = function() {
     self.loading = 'update';
     CompaniesService.updateCompany(self.company).then(function(response) {
-      console.log(response);
       self.loading = false;
       self.editMode = undefined;
       self.company = angular.copy(self.companyCopy);
