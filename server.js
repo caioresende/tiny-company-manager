@@ -15,8 +15,10 @@ app.use(express.static(distDir));
 // Create a database variable outside of the database connection callback to reuse the connection pool in your app.
 var db;
 
+var mongodbURL = process.env.MONGODB_URI || 'mongodb://heroku_8r8dq4kc@ds119598.mlab.com:19598/heroku_8r8dq4kc';
+
 // Connect to the database before starting the application server.
-mongodb.MongoClient.connect(process.env.MONGODB_URI, function (err, database) {
+mongodb.MongoClient.connect(mongodbURL, function (err, database) {
   if (err) {
     console.log(err);
     process.exit(1);
@@ -30,5 +32,36 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI, function (err, database) {
   var server = app.listen(process.env.PORT || 8080, function () {
     var port = server.address().port;
     console.log("App now running on port", port);
+  });
+});
+
+/*  "/api/companies"
+ *    GET: finds all contacts
+ *    POST: creates a new contact
+ */
+
+app.get("/api/companies", function(req, res) {
+  db.collection(COMPANIES_COLLECTION).find({}).toArray(function(err, docs) {
+    if (err) {
+      handleError(res, err.message, "Failed to get contacts.");
+    } else {
+      res.status(200).json(docs);
+    }
+  });
+});
+
+app.post("/api/companies", function(req, res) {
+  var newContact = req.body;
+
+  if (!req.body.name) {
+    handleError(res, "Invalid company name", "Insert a company name.", 400);
+  }
+
+  db.collection(COMPANIES_COLLECTION).insertOne(newContact, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to create new company.");
+    } else {
+      res.status(201).json(doc.ops[0]);
+    }
   });
 });
