@@ -1,4 +1,4 @@
-module.exports = function() {
+module.exports = function(CompaniesService) {
 
   'ngInject';
 
@@ -15,14 +15,38 @@ module.exports = function() {
     owners: ''
   };
 
+  this.data = CompaniesService;
+
+  this.companies = [];
+
+  var getCompanies = function() {
+    CompaniesService.getCompanies().then(function(response) {
+      console.log(response);
+      self.companies = response;
+    });
+  };
+
   this.companyCopy = angular.copy(this.company);
 
+  this.addCompany = function() {
+    self.loading = 'create';
+    CompaniesService.createCompany(self.company).then(function(response) {
+      console.log(response);
+      self.clearForm(false);
+      self.loading = false;
+    });
+  };
+
   this.clearForm = function(edit) {
-    if (edit) {
-      self.selectedCompany = angular.copy(self.companyCopy);
-    } else {
-      self.company = angular.copy(self.companyCopy);
-    }
+    self.company = angular.copy(self.companyCopy);
+  };
+
+  this.deleteCompany = function(id) {
+    self.loading = 'delete';
+    CompaniesService.deleteCompany(id).then(function(response) {
+      console.log(response);
+      self.loading = false;
+    });
   };
 
   this.editCompany = function(company) {
@@ -32,72 +56,22 @@ module.exports = function() {
       self.layoutAlign = 'center start';
     } else {
       self.editMode = undefined;
-      self.focusedCompany = undefined;
+      self.company = angular.copy(self.companyCopy);
       self.layoutAlign = '';
     }
   };
 
-  this.companies = [
-    {
-      _id: '2',
-      name: 'test',
-      email: 'test',
-      phone: 'test',
-      address: 'test',
-      city: 'test',
-      country: 'test',
-      owners: 'test'
-    },
-    {
-      _id: '8',
-      name: 'test',
-      email: 'test',
-      phone: 'test',
-      address: 'test',
-      city: 'test',
-      country: 'test',
-      owners: 'test'
-    },
-    {
-      _id: '3',
-      name: 'test',
-      email: 'test',
-      phone: 'test',
-      address: 'test',
-      city: 'test',
-      country: 'test',
-      owners: 'test'
-    },
-    {
-      _id: '4',
-      name: 'test',
-      email: 'test',
-      phone: 'test',
-      address: 'test',
-      city: 'test',
-      country: 'test',
-      owners: 'test'
-    },
-    {
-      _id: '5',
-      name: 'test',
-      email: 'test',
-      phone: 'test',
-      address: 'test',
-      city: 'test',
-      country: 'test',
-      owners: 'test'
-    },
-    {
-      _id: '6',
-      name: 'test',
-      email: 'test',
-      phone: 'test',
-      address: 'test',
-      city: 'test',
-      country: 'test',
-      owners: 'test'
-    }
-  ];
+  this.updateCompany = function() {
+    self.loading = 'update';
+    CompaniesService.updateCompany(self.company).then(function(response) {
+      console.log(response);
+      self.loading = false;
+      self.editMode = undefined;
+      self.company = angular.copy(self.companyCopy);
+      self.layoutAlign = '';
+    });
+  };
+
+  getCompanies();
 
 };
