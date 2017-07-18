@@ -9,7 +9,7 @@
           <md-button class="md-icon-button" ng-click="list.editCompany()">
             <md-icon>arrow_back</md-icon>
           </md-button>
-          <h6>Edit: {{list.focusedCompany.name}}</h6>
+          <h6>Edit: {{list.company.name}}</h6>
         </div>
       </div>
     </md-toolbar>
@@ -57,11 +57,11 @@
         <md-icon>clear_all</md-icon>
       </md-button>
       <span flex></span>
-      <md-button class="md-primary md-raised md-icon-button" ng-disabled="list.companyForm.$invalid" ng-show="!list.editMode">
+      <md-button class="md-primary md-raised md-icon-button" ng-disabled="list.companyForm.$invalid" ng-show="!list.editMode" ng-click="list.addCompany()">
         <md-tooltip>Add Company</md-tooltip>
         <md-icon>add</md-icon>
       </md-button>
-      <md-button class="md-primary md-raised md-icon-button" ng-disabled="list.companyForm.$invalid" ng-show="list.editMode">
+      <md-button class="md-primary md-raised md-icon-button" ng-disabled="list.companyForm.$invalid" ng-show="list.editMode" ng-click="list.updateCompany()">
         <md-tooltip>Save Company</md-tooltip>
         <md-icon>check</md-icon>
       </md-button>
@@ -73,7 +73,7 @@
     <md-content layout="row" flex>
       <md-content class="company-wrapper" layout="column" flex>
         <div layout="row" layout-wrap flex>
-          <div flex="25"  ng-repeat="company in list.companies track by company._id" layout-align="start start">
+          <div flex="25"  ng-repeat="company in list.data.companies track by company._id" layout-align="start start">
             <md-card class="company-card" ng-mouseenter="list.focusCompany = company._id" ng-mouseleave="list.focusCompany = undefined" ng-class="{'md-whiteframe-7dp': list.focusCompany === company._id, 'opacity-card': list.focusCompany && list.focusCompany !== company._id}">
               <div layout="row" layout-align="start center" class="md-padding">
                 <div class="company-initial margin-right">
@@ -117,7 +117,7 @@
                 </div>
               </div>
               <div class="card-actions" layout="row" flex ng-class="{'slide-down': list.focusCompany === company._id}">
-                <md-button ng-click="list.removeCompany(company._id, $event)">Delete</md-button>
+                <md-button ng-click="list.deleteCompany(company._id)">Delete</md-button>
                 <span flex></span>
                 <md-button class="md-primary" ng-click="list.editCompany(company)">Edit</md-button>
               </div>
