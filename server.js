@@ -71,3 +71,27 @@ app.post("/api/companies", function(req, res) {
     }
   });
 });
+
+app.put("/api/companies/:id", function(req, res) {
+  var updateDoc = req.body;
+  delete updateDoc._id;
+
+  db.collection(CONTACTS_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to update company");
+    } else {
+      updateDoc._id = req.params.id;
+      res.status(200).json(updateDoc);
+    }
+  });
+});
+
+app.delete("/api/companies/:id", function(req, res) {
+  db.collection(CONTACTS_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
+    if (err) {
+      handleError(res, err.message, "Failed to delete company");
+    } else {
+      res.status(200).json(req.params.id);
+    }
+  });
+});
