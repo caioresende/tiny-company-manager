@@ -44,9 +44,13 @@
             <label>Country</label>
             <input ng-model="list.company.country"  />
           </md-input-container>
-          <md-input-container>
-            <label>Beneficial Owners</label>
-            <input ng-model="list.company.owners"  />
+          <md-input-container md-no-float>
+            <md-chips ng-model="list.company.owners" name="owners"
+                  md-removable="list.removeCompanyOwners()" placeholder="Enter a owner...">
+              <md-chip-template>
+                <strong>{{$chip}}</strong>
+              </md-chip-template>
+            </md-chips>
           </md-input-container>
         </form>
       </md-content>
@@ -73,8 +77,8 @@
     <md-content layout="row" flex>
       <md-content class="company-wrapper" layout="column" flex>
         <div layout="row" layout-wrap flex>
-          <div flex="25"  ng-repeat="company in list.data.companies track by company._id" layout-align="start start">
-            <md-card class="company-card" ng-mouseenter="list.focusCompany = company._id" ng-mouseleave="list.focusCompany = undefined" ng-class="{'md-whiteframe-7dp': list.focusCompany === company._id, 'opacity-card': list.focusCompany && list.focusCompany !== company._id}">
+          <div flex="33"  ng-repeat="company in list.data.companies track by company._id" layout-align="start start">
+            <md-card flex="100" class="company-card" ng-mouseenter="list.focusCompany = company._id" ng-mouseleave="list.focusCompany = undefined" ng-class="{'md-whiteframe-7dp': list.focusCompany === company._id, 'opacity-card': list.focusCompany && list.focusCompany !== company._id}">
               <div layout="row" layout-align="start center" class="md-padding">
                 <div class="company-initial margin-right">
                   {{company.name | limitTo: 1}}
@@ -109,11 +113,14 @@
                     {{company.email}}
                   </p>
                 </div>
-                <div layout="row" layout-align="start start" ng-show="company.owners">
+                <div layout="row" layout-align="start start" ng-show="company.owners.length">
                   <md-icon class="margin-right">group</md-icon>
-                  <p class="md-body-1" flex>
-                    {{company.owners}}
-                  </p>
+                  <md-chips ng-model="company.owners" name="owners" readonly="true">
+                    <md-chip-template>
+                      <md-icon>person</md-icon>
+                      <span class="md-caption">{{$chip}}</span>
+                    </md-chip-template>
+                  </md-chips>
                 </div>
               </div>
               <div class="card-actions" layout="row" flex ng-class="{'slide-down': list.focusCompany === company._id}">
