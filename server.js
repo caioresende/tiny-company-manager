@@ -76,7 +76,7 @@ app.put("/api/companies/:id", function(req, res) {
   var updateDoc = req.body;
   delete updateDoc._id;
 
-  db.collection(CONTACTS_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+  db.collection(COMPANIES_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to update company");
     } else {
@@ -87,7 +87,7 @@ app.put("/api/companies/:id", function(req, res) {
 });
 
 app.delete("/api/companies/:id", function(req, res) {
-  db.collection(CONTACTS_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
+  db.collection(COMPANIES_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
     if (err) {
       handleError(res, err.message, "Failed to delete company");
     } else {
