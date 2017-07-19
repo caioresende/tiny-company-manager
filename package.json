@@ -4,9 +4,8 @@
   "description": "This app was designed using NodeJs, Express, MongoDB and AngularJS + Angular Material",
   "main": "index.js",
   "scripts": {
-    "build": "gulp buildProd",
     "start": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "gulp buildProd"
   },
   "repository": {
     "type": "git",
