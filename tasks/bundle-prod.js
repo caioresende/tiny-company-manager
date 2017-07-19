@@ -15,7 +15,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var browserSync = require('browser-sync');
 var vars = require('./variables');
 
-var bundler = watchify(browserify(vars.paths.dev.js, Object.assign(watchify.args, {
+var bundler = browserify(vars.paths.dev.js, Object.assign(watchify.args, {
   debug: false,
   fast: false
 
@@ -24,8 +24,7 @@ var bundler = watchify(browserify(vars.paths.dev.js, Object.assign(watchify.args
     appliesTo: { includeExtensions: ['.html'] },
     minify: true
   })
-  .transform(ngannotate));
-bundler.on('update', bundle); // on any dep update, runs the bundler
+  .transform(ngannotate);
 
 function bundle() {
   return bundler
@@ -36,8 +35,7 @@ function bundle() {
     // optional, remove if you dont want sourcemaps
     .pipe(buffer())
     //
-    .pipe(gulp.dest('./dist'))
-    .pipe(browserSync.reload({ stream: true}));
+    .pipe(gulp.dest('./dist'));
 }
 
 

@@ -21,5 +21,5 @@ module.exports = function () {
     )
     .pipe(importCss())
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest(vars.paths.prod.css));
+    .pipe(gulp.dest('assets/stylesheets'));
 };
