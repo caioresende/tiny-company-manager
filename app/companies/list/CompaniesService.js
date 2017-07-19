@@ -40,7 +40,7 @@ module.exports = function($q, $http) {
 
   this.deleteCompany = function(id) {
     var url = companyUrl + '/' + id;
-    return $http.delete(companyUrl).then(function() {
+    return $http.delete(url).then(function() {
       return self.getCompanies(companyUrl);
     });
   };
@@ -53,7 +53,7 @@ module.exports = function($q, $http) {
 
   this.updateCompany = function(company) {
     var url = companyUrl + '/' + angular.copy(company._id);
-    return $http.put(companyUrl, formatCompany(company)).then(function() {
+    return $http.put(url, formatCompany(company)).then(function() {
       return self.getCompanies(companyUrl);
     });
   };
