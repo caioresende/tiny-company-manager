@@ -1,5 +1,5 @@
 <md-content layout="row" layout-align="{{list.layoutAlign}}" flex class="md-padding">
-  <md-card flex="30" class="translate-x" ng-class="{'on': list.editMode}">
+  <md-card flex="{{list.crudCardFlex}}" class="translate-x" ng-class="{'on': list.editMode}">
     <md-toolbar>
       <div class="md-toolbar-tools">
         <h6 ng-show="!list.editMode">
@@ -19,7 +19,10 @@
         <form name="list.companyForm" layout="column" class="md-padding" flex>
           <md-input-container>
             <label>Name</label>
-            <input ng-model="list.company.name"  />
+            <input required name="name" ng-model="list.company.name"  />
+            <div ng-messages="list.companyForm.name.$error">
+              <div ng-message="required">Company name is required</div>
+            </div>
           </md-input-container>
           <md-input-container>
             <label>Email</label>
@@ -30,7 +33,10 @@
           </md-input-container>
           <md-input-container>
             <label>Phone</label>
-            <input ng-model="list.company.phone"  />
+            <input type="number" name="phone" ng-model="list.company.phone"  />
+            <div ng-messages="list.companyForm.phone.$error">
+              <div ng-message="number">You did not enter your phone correctly</div>
+            </div>
           </md-input-container>
           <md-input-container>
             <label>Adress</label>
@@ -56,20 +62,17 @@
       </md-content>
     </md-content>
     <md-card-actions class="padding-bottom" layout="row" layout-align="start center">
-      <md-button class="md-icon-button" ng-click="list.clearForm(list.editMode)">
-        <md-tooltip>Clear Fields</md-tooltip>
-        <md-icon>clear_all</md-icon>
-      </md-button>
       <span flex></span>
-      <md-button class="md-primary md-raised md-icon-button" ng-disabled="list.companyForm.$invalid" ng-show="!list.editMode" ng-click="list.addCompany()">
+      <md-button class="md-primary md-raised md-icon-button" ng-disabled="list.companyForm.$invalid || list.loading" ng-show="!list.editMode" ng-click="list.addCompany()">
         <md-tooltip>Add Company</md-tooltip>
         <md-icon>add</md-icon>
       </md-button>
-      <md-button class="md-primary md-raised md-icon-button" ng-disabled="list.companyForm.$invalid" ng-show="list.editMode" ng-click="list.updateCompany()">
+      <md-button class="md-primary md-raised md-icon-button" ng-disabled="list.companyForm.$invalid || list.loading" ng-show="list.editMode" ng-click="list.updateCompany()">
         <md-tooltip>Save Company</md-tooltip>
         <md-icon>check</md-icon>
       </md-button>
     </md-card-actions>
+    <md-progress-linear ng-show="list.loading === 'create' || list.loading === 'update'"></md-progress-linear>
   </md-card>
   <span class="md-padding"></span>
   <md-content class="fade-out translate-x" layout="column" flex ng-show="!list.editMode" ng-class="{'on': list.editMode}">
@@ -77,7 +80,7 @@
     <md-content layout="row" flex>
       <md-content class="company-wrapper" layout="column" flex>
         <div layout="row" layout-wrap flex>
-          <div flex="33"  ng-repeat="company in list.data.companies track by company._id" layout-align="start start">
+          <div flex="33"  ng-repeat="company in list.data.companies track by company._id | orderBy: 'name'" layout-align="start start">
             <md-card flex="100" class="company-card" ng-mouseenter="list.focusCompany = company._id" ng-mouseleave="list.focusCompany = undefined" ng-class="{'md-whiteframe-7dp': list.focusCompany === company._id, 'opacity-card': list.focusCompany && list.focusCompany !== company._id}">
               <div layout="row" layout-align="start center" class="md-padding">
                 <div class="company-initial margin-right">
@@ -115,7 +118,7 @@
                 </div>
                 <div layout="row" layout-align="start start" ng-show="company.owners.length">
                   <md-icon class="margin-right">group</md-icon>
-                  <md-chips ng-model="company.owners" name="owners" readonly="true">
+                  <md-chips ng-model="company.owners" name="owners" readonly="true" flex>
                     <md-chip-template>
                       <md-icon>person</md-icon>
                       <span class="md-caption">{{$chip}}</span>
@@ -124,12 +127,16 @@
                 </div>
               </div>
               <div class="card-actions" layout="row" flex ng-class="{'slide-down': list.focusCompany === company._id}">
-                <md-button ng-click="list.deleteCompany(company._id)">Delete</md-button>
+                <md-button ng-click="list.deleteCompany(company._id)" ng-disabled="list.loading === 'delete' + company._id">Delete</md-button>
                 <span flex></span>
-                <md-button class="md-primary" ng-click="list.editCompany(company)">Edit</md-button>
+                <md-button class="md-primary" ng-click="list.editCompany(company)" ng-disabled="list.loading === 'delete' + company._id">Edit</md-button>
               </div>
+              <md-progress-linear ng-show="list.loading === 'delete' + company._id"></md-progress-linear>
             </md-card>
           </div>
+        </div>
+        <div layout="row" ng-show="!list.data.companies">
+          There is nothing to show here
         </div>
       </md-content>
     </md-content>
