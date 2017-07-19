@@ -12,7 +12,7 @@ module.exports = function(CompaniesService) {
     address: '',
     city: '',
     country: '',
-    owners: ''
+    owners: []
   };
 
   this.data = CompaniesService;
