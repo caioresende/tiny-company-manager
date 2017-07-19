@@ -5,8 +5,10 @@ module.exports = function($q, $http) {
 
   var companyUrl = 'https://mysterious-citadel-17041.herokuapp.com/api/companies';
 
-  var formatCompany = function(company) {
-    var keys = Object.keys(company).length;
+  var formatCompany = function(obj) {
+    var company = obj;
+    var keys = Object.keys(company);
+
     if (keys) {
       for (var i = 0; i < keys.length; i++) {
         if (!company[keys[i]]) {
@@ -14,6 +16,8 @@ module.exports = function($q, $http) {
         }
       }
     }
+    console.log(company);
+    return company;
   };
 
   var formatCompanies = function(response) {
@@ -35,8 +39,10 @@ module.exports = function($q, $http) {
   };
 
   this.deleteCompany = function(id) {
-    delete self.companies[id];
-    return $q.when(true);
+    var url = companyUrl + '/' + id;
+    return $http.delete(companyUrl, formatCompany(company)).then(function() {
+      return self.getCompanies(companyUrl);
+    });
   };
 
   this.getCompanies = function() {
@@ -46,7 +52,9 @@ module.exports = function($q, $http) {
   };
 
   this.updateCompany = function(company) {
-    self.companies[company._id] = company;
-    return $q.when(true);
+    var url = companyUrl + '/' + angular.copy(company._id);
+    return $http.put(companyUrl, formatCompany(company)).then(function() {
+      return self.getCompanies(companyUrl);
+    });
   };
 };
