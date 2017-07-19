@@ -40,7 +40,7 @@ module.exports = function($q, $http) {
 
   this.deleteCompany = function(id) {
     var url = companyUrl + '/' + id;
-    return $http.delete(companyUrl, formatCompany(company)).then(function() {
+    return $http.delete(companyUrl).then(function() {
       return self.getCompanies(companyUrl);
     });
   };
