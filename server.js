@@ -15,7 +15,7 @@ app.use(express.static(distDir));
 // Create a database variable outside of the database connection callback to reuse the connection pool in your app.
 var db;
 
-var mongodbURL = process.env.MONGODB_URI || 'mongodb://heroku_8r8dq4kc@ds119598.mlab.com:19598/heroku_8r8dq4kc';
+var mongodbURL = process.env.MONGODB_URI || 'mongodb://heroku_6pf1lq2q@ds113063.mlab.com:13063/heroku_6pf1lq2q';
 
 // Connect to the database before starting the application server.
 mongodb.MongoClient.connect(mongodbURL, function (err, database) {
