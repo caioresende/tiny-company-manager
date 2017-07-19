@@ -6,7 +6,7 @@ var browserSync = require('browser-sync');
 
 module.exports = function () {
   browserSync({
-    files: ['./dist/bundle.js', './app/index.html'],
+    files: ['./bundle.js', './app/index.html'],
     server: {
       baseDir: ['./app', './']
     },

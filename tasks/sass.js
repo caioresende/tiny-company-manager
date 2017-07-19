@@ -5,10 +5,11 @@ var sourcemaps = require('gulp-sourcemaps')
 var importCss = require('gulp-import-css');
 var moduleImporter = require('sass-module-importer');
 var browserSync = require('browser-sync');
+var vars = require('./variables');
 
 module.exports = function () {
   return gulp
-    .src('assets/stylesheets/app.scss')
+    .src(vars.paths.dev.css)
     .pipe(sourcemaps.init())
     .pipe(
       sass({
