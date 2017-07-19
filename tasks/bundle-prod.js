@@ -5,7 +5,6 @@
 var gulp = require('gulp');
 var browserify = require('browserify');
 var stringify = require('stringify');
-var uglify = require('uglify-js');
 var watchify = require('watchify');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
@@ -14,18 +13,18 @@ var gutil = require('gulp-util');
 var ngannotate = require('browserify-ngannotate');
 var sourcemaps = require('gulp-sourcemaps');
 var browserSync = require('browser-sync');
+var vars = require('./variables');
 
-var bundler = watchify(browserify('./app/app.js', Object.assign(watchify.args, {
-  debug: true,
-  fast: true
+var bundler = watchify(browserify(vars.paths.dev.js, Object.assign(watchify.args, {
+  debug: false,
+  fast: false
 
 }))
   .transform(stringify, {
     appliesTo: { includeExtensions: ['.html'] },
-    minify: false
+    minify: true
   })
-  .transform(ngannotate))
-  .transform(uglyfy));
+  .transform(ngannotate));
 bundler.on('update', bundle); // on any dep update, runs the bundler
 
 function bundle() {
@@ -37,7 +36,7 @@ function bundle() {
     // optional, remove if you dont want sourcemaps
     .pipe(buffer())
     //
-    .pipe(gulp.dest('./'))
+    .pipe(gulp.dest('./dist'))
     .pipe(browserSync.reload({ stream: true}));
 }
 
