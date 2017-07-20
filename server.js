@@ -10,8 +10,8 @@ var COMPANIES_COLLECTION = "companies";
 var app = express();
 app.use(bodyParser.json());
 
-app.use("/", express.static(__dirname + "/dist"));
-app.use('/assets', express.static(path.join(__dirname, '/dist/assets')));
+app.use('/', express.static(__dirname + '/dist'));
+app.use('/assets/stylesheets', express.static(path.join(__dirname, '/dist/assets/stylesheets')));
 app.use(cors());
 
 // Create a database variable outside of the database connection callback to reuse the connection pool in your app.
