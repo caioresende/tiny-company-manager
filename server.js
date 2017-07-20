@@ -10,7 +10,7 @@ var app = express();
 app.use(bodyParser.json());
 
 app.use("/", express.static(__dirname + "/dist/"));
-app.use("assets/stylesheets", express.static(__dirname + "assets/stylesheets"));
+app.use("assets/stylesheets", express.static(__dirname + "/dist/assets/stylesheets"));
 app.use(cors());
 
 // Create a database variable outside of the database connection callback to reuse the connection pool in your app.
