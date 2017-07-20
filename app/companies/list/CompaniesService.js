@@ -3,7 +3,7 @@ module.exports = function($q, $http) {
 
   var self = this;
 
-  var companyUrl = 'https://mysterious-citadel-17041.herokuapp.com/api/companies';
+  var companyUrl = 'https://comp-manager-caio.herokuapp.com/api/companies';
 
   var formatCompany = function(obj) {
     var company = obj;
