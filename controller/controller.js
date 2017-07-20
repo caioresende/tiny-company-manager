@@ -8,9 +8,7 @@ var dao = require('../dao/dao');
  */
 this.add = function(req, resp) {
   Promise.resolve()
-  .then(function(req) {
-    return dao.insert(req)
-  })
+  dao.insert(req)
   .then(function(doc) {
     resp.status(201);
     resp.json(doc);
@@ -26,9 +24,7 @@ this.add = function(req, resp) {
  */
 this.get = function(req, resp) {
   Promise.resolve()
-  .then(function() {
-    return dao.findAll(req);
-  })
+  dao.findAll(req)
   .then(function(doc) {
     resp.status(201);
     resp.json(doc);
@@ -42,11 +38,8 @@ this.get = function(req, resp) {
 /**
  * Function to get all companies on database
  */
-this.put = function(req, resp) {
-  Promise.resolve()
-  .then(function() {
-    return dao.update(req);
-  })
+this.update = function(req, resp) {
+  dao.update(req)
   .then(function(doc) {
     resp.status(201);
     resp.json(doc);
@@ -62,9 +55,7 @@ this.put = function(req, resp) {
  */
 this.delete = function(req, resp) {
   Promise.resolve()
-  .then(function() {
-    return dao.delete(req);
-  })
+  return dao.delete(req)
   .then(function(doc) {
     resp.status(201);
     resp.json(doc);

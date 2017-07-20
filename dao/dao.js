@@ -21,6 +21,12 @@ mongodb.MongoClient.connect(mongodbURL, function (err, database) {
   console.log("Database connection ready");
 });
 
+// Generic error handler used by all endpoints.
+function handleError(res, reason, message, code) {
+  console.log("ERROR: " + reason);
+  res.status(code || 500).json({"error": message});
+}
+
 /**
  * Abstraction to get all companies on database
  * @returns {Promise<Array>}
@@ -44,8 +50,10 @@ this.insert = function(obj) {
     db.collection(COMPANIES_COLLECTION).insertOne(obj, function(err, doc) {
       if (err) {
         handleError(res, err.message, "Failed to create new company.");
+        reject(err);
       } else {
         res.status(201).json(doc.ops[0]);
+        resolve(doc);
       }
     });
   });
@@ -53,16 +61,21 @@ this.insert = function(obj) {
 
 /**
  * Abstraction to delete a company on database
- * @param  {str} obj - object to update
+ * @param  {Object} obj - object to update
  * @returns {Promise<Object>}
  */
 this.update = function(obj) {
+  var updateDoc = obj.body;
+
+  delete updateDoc._id;
   return new Promise(function(resolve, reject) {
-    db.collection(COMPANIES_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, obj, function(err, doc) {
+    db.collection(COMPANIES_COLLECTION).updateOne({_id: new ObjectID(obj.params.id)}, updateDoc, function(err, doc) {
       if (err) {
-        handleError(res, err.message, "Failed to create new company.");
+        handleError(res, err.message, "Failed to update new company.");
+        reject(err);
       } else {
         res.status(201).json(doc.ops[0]);
+        resolve(doc);
       }
     });
   });
@@ -72,13 +85,15 @@ this.update = function(obj) {
  * Abstraction to update a company on database
  * @returns {Promise<Object>}
  */
-this.delete = function(id) {
+this.delete = function(obj) {
   return new Promise(function(resolve, reject) {
-    db.collection(COMPANIES_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
+    db.collection(COMPANIES_COLLECTION).deleteOne({_id: new ObjectID(obj.params.id)}, function(err, result) {
       if (err) {
         handleError(res, err.message, "Failed to delete company");
+        reject(err);
       } else {
-        res.status(200).json(req.params.id);
+        res.status(200).json(obj.params.id);
+        resolve(result);
       }
     });
   });
