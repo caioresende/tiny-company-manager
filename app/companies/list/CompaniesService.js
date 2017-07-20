@@ -16,7 +16,6 @@ module.exports = function($q, $http) {
         }
       }
     }
-    console.log(company);
     return company;
   };
 

@@ -1,12 +1,13 @@
 'use strict'
-
 var dao = require('../dao/dao');
 
 /**
  * Function to add a new POI on database
  */
 this.add = function(req, resp) {
-  return dao.insert(req)
+  var nComp = req.body;
+
+  return dao.insert(nComp)
   .then(function(doc) {
     resp.status(201);
     resp.json(doc);
@@ -36,7 +37,10 @@ this.get = function(req, resp) {
  * Function to get all companies on database
  */
 this.update = function(req, resp) {
-  return dao.update(req)
+  var uComp = obj.body;
+
+  delete uComp._id;
+  return dao.update(uComp)
   .then(function(doc) {
     resp.status(201);
     resp.json(doc);

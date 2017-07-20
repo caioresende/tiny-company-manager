@@ -2,7 +2,6 @@
 
 var Promise = require('bluebird');
 var mongodb = require('mongodb');
-var assert = require('assert');
 
 var db;
 var ObjectID = mongodb.ObjectID;
@@ -28,8 +27,7 @@ mongodb.MongoClient.connect(mongodbURL, function (err, database) {
 this.findAll = function() {
   return new Promise(function(resolve, reject) {
     db.collection(COMPANIES_COLLECTION).find({}).toArray(function(err, docs) {
-      assert.equal(err, null);
-      resolve(docs);
+      err ? reject(err) : resolve(docs);
     });
   });
 };
@@ -53,11 +51,8 @@ this.insert = function(obj) {
  * @returns {Promise<Object>}
  */
 this.update = function(obj) {
-  var updateDoc = obj.body;
-
-  delete updateDoc._id;
   return new Promise(function(resolve, reject) {
-    db.collection(COMPANIES_COLLECTION).updateOne({_id: new ObjectID(obj.params.id)}, updateDoc, function(err, doc) {
+    db.collection(COMPANIES_COLLECTION).updateOne({_id: new ObjectID(obj.params.id)}, obj, function(err, doc) {
       err ? reject(err) : resolve(doc);
     });
   });
