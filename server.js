@@ -11,6 +11,7 @@ app.use(bodyParser.json());
 
 // Create link to Angular build directory
 var distDir = __dirname + "/dist/";
+var styleDir = __dirname + "/dist/assets/stylesheets/";
 
 app.use(express.static(distDir));
 app.use(express.static('assets/stylesheets/'));
