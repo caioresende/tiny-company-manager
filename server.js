@@ -9,12 +9,8 @@ var COMPANIES_COLLECTION = "companies";
 var app = express();
 app.use(bodyParser.json());
 
-// Create link to Angular build directory
-var distDir = __dirname + "/dist/";
-var styleDir = __dirname + "/assets/stylesheets/";
-
-app.use(express.static(distDir));
-app.use(styleDir, express.static(__dirname + styleDir));
+app.use("/", express.static(__dirname + "/dist/"));
+app.use("assets/stylesheets", express.static(__dirname + "assets/stylesheets"));
 app.use(cors());
 
 // Create a database variable outside of the database connection callback to reuse the connection pool in your app.
