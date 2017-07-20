@@ -4,7 +4,7 @@
   "description": "This app was designed using NodeJs, Express, MongoDB and AngularJS + Angular Material",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node index.js",
     "postinstall": "gulp buildProd"
   },
   "repository": {
@@ -47,6 +47,7 @@
     "angular-aria": "^1.6.5",
     "angular-material": "^1.1.4",
     "angular-messages": "^1.6.5",
+    "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",
     "cors": "^2.8.4",
     "express": "^4.15.3",
