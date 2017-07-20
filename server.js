@@ -10,8 +10,10 @@ var app = express();
 app.use(bodyParser.json());
 
 // Create link to Angular build directory
-var distDir = __dirname + "/dist/";
-var styleDir = __dirname + '/assets/stylesheets/';
+var distDir = __dirname + "dist/";
+var styleDir = __dirname + "assets/stylesheets/";
+
+console.log(distDir, styleDir);
 
 app.use(express.static(distDir));
 app.use(express.static(styleDir));
