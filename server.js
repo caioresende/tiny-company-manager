@@ -2,6 +2,7 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var mongodb = require("mongodb");
 var cors = require('cors');
+var path = require('path');
 var ObjectID = mongodb.ObjectID;
 
 var COMPANIES_COLLECTION = "companies";
