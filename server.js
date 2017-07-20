@@ -2,7 +2,6 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var mongodb = require("mongodb");
 var cors = require('cors');
-var path = require('path');
 var ObjectID = mongodb.ObjectID;
 
 var COMPANIES_COLLECTION = "companies";
@@ -10,8 +9,9 @@ var COMPANIES_COLLECTION = "companies";
 var app = express();
 app.use(bodyParser.json());
 
-var staticFilesPath = path.resolve(__dirname, 'dist');
-app.use(express.static(staticFilesPath));
+app.use("/", express.static(__dirname + "/dist/"));
+app.use("assets", express.static(__dirname + "/assets"));
+app.use("assets/stylesheets", express.static(__dirname + "/assets/stylesheets"));
 app.use(cors());
 
 // Create a database variable outside of the database connection callback to reuse the connection pool in your app.
