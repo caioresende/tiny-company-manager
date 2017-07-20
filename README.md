@@ -2,7 +2,7 @@
 Tiny company manager app written using nodejs, express, mongodb and angularjs + angular material
 
 # Running the app
-This section does a step by step on how to run the app
+This section does a step by step on how to run the app. There is already a deployed version here: https://comp-manager-caio.herokuapp.com. ***Have fun!***
 ## Local Environment
 To run locally, using gulp and node, follow the steps after opening terminal:
   1. Clone this repository.
