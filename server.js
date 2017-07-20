@@ -1,6 +1,7 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var mongodb = require("mongodb");
+var cors = require('cors');
 var ObjectID = mongodb.ObjectID;
 
 var COMPANIES_COLLECTION = "companies";
@@ -14,12 +15,7 @@ var styleDir = __dirname + '/assets/stylesheets';
 
 app.use(express.static(distDir));
 app.use(express.static(styleDir));
-
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+app.use(cors());
 
 // Create a database variable outside of the database connection callback to reuse the connection pool in your app.
 var db;
