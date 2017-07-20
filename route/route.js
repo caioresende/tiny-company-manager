@@ -11,28 +11,28 @@ express().use(cors());
 /**
  * Router to make a GET and retrieve all companies on database
  */
-app.get('/api/companies', cors(), function(req, resp) {
+app.get('/api/companies', function(req, resp) {
   controller.get(req, resp);
 });
 
 /**
  * Router to make a POST and create a company on database
  */
-app.post('/api/companies', cors(), function(req, resp) {
+app.post('/api/companies', function(req, resp) {
   controller.add(req, resp);
 });
 
 /**
  * Router to make a PUT and update a company on database
  */
-app.put('/api/companies/:id', cors(), function(req, resp) {
+app.put('/api/companies/:id', function(req, resp) {
   controller.update(req, resp);
 });
 
 /**
  * Router to make a DELETE and remove a company on database
  */
-app.delete('/api/companies/:id', cors(), function(req, resp) {
+app.delete('/api/companies/:id', function(req, resp) {
   controller.delete(req, resp);
 });
 
