@@ -134,7 +134,7 @@
               <md-progress-linear ng-show="list.loading === 'delete' + company._id"></md-progress-linear>
             </md-card>
           </div>
-          <div ng-show="list.data.companies">
+          <div ng-show="!list.data.hasCompanies">
             There is nothing to show here
           </div>
         </div>

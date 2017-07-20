@@ -11,7 +11,7 @@ module.exports = function($q, $http) {
 
     if (keys) {
       for (var i = 0; i < keys.length; i++) {
-        if (!company[keys[i]] || (company[keys[i]] && !company[keys[i]].length)) {
+        if (!company[keys[i]] || (keys[i] == 'owner' && !company[keys[i]].length)) {
           delete company[keys[i]];
         }
       }
@@ -22,10 +22,16 @@ module.exports = function($q, $http) {
   var formatCompanies = function(response) {
     var obj = {};
 
-    for (var i = 0; i < response.length; i++) {
-      obj[response[i]._id] = response[i];
+    if (response.length) {
+      for (var i = 0; i < response.length; i++) {
+        obj[response[i]._id] = response[i];
+      }
+      self.hasCompanies = true;
+      self.companies = obj;
+    } else {
+      self.hasCompanies = false;
     }
-    self.companies = obj;
+
     return obj;
   };
 
@@ -39,7 +45,9 @@ module.exports = function($q, $http) {
 
   this.deleteCompany = function(id) {
     var url = companyUrl + '/' + id;
+
     return $http.delete(url).then(function() {
+      delete self.companies[id];
       return self.getCompanies(companyUrl);
     });
   };
@@ -52,6 +60,7 @@ module.exports = function($q, $http) {
 
   this.updateCompany = function(company) {
     var url = companyUrl + '/' + angular.copy(company._id);
+
     return $http.put(url, formatCompany(company)).then(function() {
       return self.getCompanies(companyUrl);
     });
