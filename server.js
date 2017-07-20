@@ -51,7 +51,7 @@ function handleError(res, reason, message, code) {
  *    POST: creates a new contact
  */
 
-app.get("/api/companies", function(req, res) {
+app.get("/api/companies", cors(), function(req, res) {
   db.collection(COMPANIES_COLLECTION).find({}).toArray(function(err, docs) {
     if (err) {
       handleError(res, err.message, "Failed to get contacts.");
@@ -61,7 +61,7 @@ app.get("/api/companies", function(req, res) {
   });
 });
 
-app.post("/api/companies", function(req, res) {
+app.post("/api/companies", cors(), function(req, res) {
   var newContact = req.body;
 
   if (!req.body.name) {
@@ -77,7 +77,7 @@ app.post("/api/companies", function(req, res) {
   });
 });
 
-app.put("/api/companies/:id", function(req, res) {
+app.put("/api/companies/:id", cors(), function(req, res) {
   var updateDoc = req.body;
   delete updateDoc._id;
 
@@ -91,7 +91,7 @@ app.put("/api/companies/:id", function(req, res) {
   });
 });
 
-app.delete("/api/companies/:id", function(req, res) {
+app.delete("/api/companies/:id", cors(), function(req, res) {
   db.collection(COMPANIES_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
     if (err) {
       handleError(res, err.message, "Failed to delete company");
