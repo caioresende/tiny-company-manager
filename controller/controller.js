@@ -37,7 +37,7 @@ this.get = function(req, resp) {
  * Function to get all companies on database
  */
 this.update = function(req, resp) {
-  var uComp = obj.body;
+  var uComp = req.body;
 
   delete uComp._id;
   return dao.update(uComp)
