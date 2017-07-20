@@ -50,9 +50,9 @@ this.insert = function(obj) {
  * @param  {Object} obj - object to update
  * @returns {Promise<Object>}
  */
-this.update = function(obj) {
+this.update = function(obj, id) {
   return new Promise(function(resolve, reject) {
-    db.collection(COMPANIES_COLLECTION).updateOne({_id: new ObjectID(obj.params.id)}, obj, function(err, doc) {
+    db.collection(COMPANIES_COLLECTION).updateOne({_id: new ObjectID(id)}, obj, function(err, doc) {
       err ? reject(err) : resolve(doc);
     });
   });

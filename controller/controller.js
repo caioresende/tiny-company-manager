@@ -40,7 +40,8 @@ this.update = function(req, resp) {
   var uComp = req.body;
 
   delete uComp._id;
-  return dao.update(uComp)
+  
+  return dao.update(uComp, req.params.id)
   .then(function(doc) {
     resp.status(201);
     resp.json(doc);
