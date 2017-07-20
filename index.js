@@ -7,6 +7,8 @@ var cors = require('cors');
 var path = require('path');
 
 var app = express();
+
+app.use(cors());
 app.use(bodyParser.json());
 
 app.use('/', express.static(__dirname + '/dist'));
