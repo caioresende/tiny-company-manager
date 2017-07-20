@@ -21,12 +21,6 @@ mongodb.MongoClient.connect(mongodbURL, function (err, database) {
   console.log("Database connection ready");
 });
 
-// Generic error handler used by all endpoints.
-function handleError(res, reason, message, code) {
-  console.log("ERROR: " + reason);
-  res.status(code || 500).json({"error": message});
-}
-
 /**
  * Abstraction to get all companies on database
  * @returns {Promise<Array>}
@@ -48,13 +42,7 @@ this.findAll = function() {
 this.insert = function(obj) {
   return new Promise(function(resolve, reject) {
     db.collection(COMPANIES_COLLECTION).insertOne(obj, function(err, doc) {
-      if (err) {
-        handleError(res, err.message, "Failed to create new company.");
-        reject(err);
-      } else {
-        res.status(201).json(doc.ops[0]);
-        resolve(doc);
-      }
+      err ? reject(err) : resolve(doc);
     });
   });
 };
@@ -70,13 +58,7 @@ this.update = function(obj) {
   delete updateDoc._id;
   return new Promise(function(resolve, reject) {
     db.collection(COMPANIES_COLLECTION).updateOne({_id: new ObjectID(obj.params.id)}, updateDoc, function(err, doc) {
-      if (err) {
-        handleError(res, err.message, "Failed to update new company.");
-        reject(err);
-      } else {
-        res.status(201).json(doc.ops[0]);
-        resolve(doc);
-      }
+      err ? reject(err) : resolve(doc);
     });
   });
 };
@@ -88,13 +70,7 @@ this.update = function(obj) {
 this.delete = function(obj) {
   return new Promise(function(resolve, reject) {
     db.collection(COMPANIES_COLLECTION).deleteOne({_id: new ObjectID(obj.params.id)}, function(err, result) {
-      if (err) {
-        handleError(res, err.message, "Failed to delete company");
-        reject(err);
-      } else {
-        res.status(200).json(obj.params.id);
-        resolve(result);
-      }
+      err ? reject(err) : resolve(result);
     });
   });
 };
