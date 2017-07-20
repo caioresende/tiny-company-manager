@@ -29,7 +29,7 @@ router.put('/api/companies/:id', cors(), function(req, resp) {
   var updateDoc = req.body;
 
   delete updateDoc._id;
-  controller.update(req, resp);
+  controller.update(updateDoc, resp);
 });
 
 /**
