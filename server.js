@@ -11,10 +11,10 @@ app.use(bodyParser.json());
 
 // Create link to Angular build directory
 var distDir = __dirname + "/dist/";
-var styleDir = __dirname + "/dist/assets/stylesheets/";
+var styleDir = __dirname + "/assets/stylesheets/";
 
 app.use(express.static(distDir));
-app.use(express.static(styleDir));
+app.use(styleDir, express.static(__dirname + styleDir));
 app.use(cors());
 
 // Create a database variable outside of the database connection callback to reuse the connection pool in your app.
