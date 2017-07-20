@@ -11,7 +11,7 @@ module.exports = function($q, $http) {
 
     if (keys) {
       for (var i = 0; i < keys.length; i++) {
-        if (!company[keys[i]]) {
+        if (!company[keys[i]] || (company[keys[i]] && !company[keys[i]].length)) {
           delete company[keys[i]];
         }
       }
